@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Countdown to a Special Surprise</title> -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @layer properties {
+            @property --elh {
+            /* eye left height   */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }
+
+            @property --erx {
+            /* eye right x pos   */
+              syntax: '<percentage>';
+              inherits: true;
+              initial-value: 0%;
+            }
+            @property --fx {
+            /* face x pos   */
+              syntax: '<percentage>';
+              inherits: true;
+              initial-value: 0%;
+            }
+            @property --ealw {
+            /* ear left w    */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }@property --earw {
+            /* ear right w    */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }
+
+
+            @property --erh {
+            /* eye right height   */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }
+            @property --mh {
+            /* mouth height   */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }
+            @property --mw {
+            /* mouth width   */
+              syntax: '<number>';
+              inherits: true;
+              initial-value: 1;
+            }
+        }
+
+        :root {
+            --surface: #111;
+            --c: white;
+            --c2: #9ae3dc;
+            --c3: magenta;
+        }
+
+        .ai-bot {
+            scale: 4.2;
+            width: 34px;
+            aspect-ratio: 1;
+            position: relative;
+            display: grid;
+            place-items: center;
+            animation: blink 2.4s ease infinite, move-head 4.2s linear(0 0%, 0 2.27%, 0.02 4.53%, 0.04 6.8%, 0.06 9.07%, 0.1 11.33%, 0.14 13.6%, 0.25 18.15%, 0.39 22.7%, 0.56 27.25%, 0.77 31.8%, 1 36.35%, 0.89 40.9%, 0.85 43.18%, 0.81 45.45%, 0.79 47.72%, 0.77 50%, 0.75 52.27%, 0.75 54.55%, 0.75 56.82%, 0.77 59.1%, 0.79 61.38%, 0.81 63.65%, 0.85 65.93%, 0.89 68.2%, 1 72.7%, 0.97 74.98%, 0.95 77.25%, 0.94 79.53%, 0.94 81.8%, 0.94 84.08%, 0.95 86.35%, 0.97 88.63%, 1 90.9%, 0.99 93.18%, 0.98 95.45%, 0.99 97.73%, 1 100%)  infinite, mouth 1.2s ease-in infinite;
+          
+            .head {
+                background: linear-gradient(var(--c) 80%,color-mix(in srgb, var(--c), black 30%), var(--c) );
+                border-radius: .375rem;
+                position: absolute;
+                width: 28px;
+                height: 20px;
+                
+                
+                &:before, &:after {
+                  content: '';
+                  position: absolute;
+                  left: -4px;
+                  top: 6px;
+                  width: 2px;
+                  height: 8px;
+                  background: var(--c,1);
+                  border-radius: 2px 0 0 2px;
+                  scale: var(--ealw, 1) 1;
+                }
+                &:after {
+                  right: -4px;
+                  left: unset;
+                   border-radius: 0 2px 2px 0;
+                  scale: var(--earw, 1) 1;
+                }
+                
+                .face {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  position: absolute;
+                  inset: 0 3px;
+                  background: var(--surface);
+                  translate: var(--fx) 0;
+                  border-radius: 4px;
+                  padding: 4px 4px 2px 4px;
+                  gap: 3px;
+                  
+                  &:before {
+                    content: '';
+                    background: var(--c);
+                    position: absolute;
+                    height: 1px;
+                    width: 10px;
+                    top: -2px;
+                    border-radius: 2px 2px 0 0;
+                    mask: radial-gradient(circle at 50% 100%, transparent 45%, black 45%)
+                  }
+                 
+                  
+                  .eyes {
+                    display: flex;
+                    height: 8px;
+                    gap: 6px;
+                    &:before, &:after {
+                      content: '';
+                      width: 5px;
+                      height:  8px;
+                      scale: 1 var(--elh);
+                      filter: drop-shadow( 0 0 2px var(--c2));
+                      background: repeating-linear-gradient(to bottom, var(--c), var(--c) .25px, transparent .25px, transparent .6px), linear-gradient(to bottom, var(--c3), transparent 60%), var(--c2);
+                      border-radius: 1px;
+                      translate: var(--erx) 0;
+                    }
+                    
+                    &:after {
+                       scale: 1 var(--erh);
+                            translate: var(--erx) 0;
+                    }
+                  }
+                  
+                  .mouth  {
+                      width: 10px;
+                    height: 2px;
+                    background: var(--c2);
+                    border-radius: 0 0 1px 1px;
+                    filter: drop-shadow( 0 0 2px var(--c2));
+                    scale: var(--mw, 1) var(--mh, 1);
+                  }
+                }
+            }
+        }
+
+        @layer animations {
+          
+        @keyframes blink {
+          from,10%, to { 
+            --elh: 1;
+            --erh: 1;
+          }
+          
+          2% {
+            --elh: .2;
+          }
+          
+          8% {
+            --erh: .1;
+          }
+        }
+
+        @keyframes mouth {
+          from, 30%,70%, to { 
+          --mh: 1;
+            --mw: 1;
+          }
+          
+          20% {
+            --mh: .5;
+          }
+          
+          60%{ 
+              --mw: .7;
+          }
+        }
+
+        @keyframes move-head {
+          from, 20%, 40%, to{ 
+            --erx: 0%;
+            --fx: 0%;
+            --ealw: 1;
+            --earw: 1;
+          }
+          
+          10% {
+            --erx: 20%;
+            --fx: 10%;
+            --ealw: 1.5;
+            --earw: .5;
+          }
+          
+          30% {
+            --erx: -20%;
+            --fx: -10%;
+            --ealw: .5;
+            --earw: 1.5;
+          }
+          
+        }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Inter', 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .robot-header {
+            margin-bottom: 50px;
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .robot-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .countdown-container {
+            margin-bottom: 30px;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 100px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .time-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .time-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        .surprise-button {
+            display: none;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .surprise-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .message-section {
+            background-color: #111;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.05);
+        }
+
+        .message-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .message-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .show {
+            display: inline-block !important;
+        }
+
+        @media (max-width: 768px) {
+            .robot-title {
+                font-size: 1.5rem;
+            }
+            
+            .countdown {
+                gap: 15px;
+            }
+            
+            .time-unit {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .time-number {
+                font-size: 2.5rem;
+            }
+            
+            .message-section {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="robot-header">
+            <div class="ai-bot">
+                <div class="head">
+                    <div class="face">
+                        <div class="eyes"></div>
+                        <div class="mouth"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="countdown-container">
+            <div id="countdown" class="countdown">
+                <div class="time-unit">
+                    <span id="days" class="time-number">00</span>
+                    <div class="time-label">Days</div>
+                </div>
+                <div class="time-unit">
+                    <span id="hours" class="time-number">00</span>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes" class="time-number">00</span>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds" class="time-number">00</span>
+                    <div class="time-label">Seconds</div>
+                </div>
+            </div>
+            
+            <a href="https://anniversary-elliexyang.vercel.app/" id="surpriseButton" class="surprise-button hidden">
+                Unlock the Surprise
+            </a>
+        </div>
+
+        <div class="message-section">
+            <h2>For My Love, Ellie</h2>
+            <div class="message-text">
+                <p>Isn't it crazy how time flies? I still vividly remember the first time I saw you (the notion page), the day I asked you out (I was so nervous my hands were shaking when I arranged my gifts), and now today - our half year anniversary!</p>
+                <br>
+                
+                <p>As these numbers tick down, know that my love for you only grows stronger. I know we've both been waiting so long for this day to come, and the time is almost here where we can celebrate the gifts we got for each other! Too excited I'm not sure if I can sleep...</p>
+                <br>
+                
+                <p>I love you more than words can express, ready to be stuck with mefor 1194 more months? ❤️</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set your target date here (YYYY, MM-1, DD, HH, MM, SS)
+        // Note: Month is 0-indexed (0 = January, 11 = December)
+        const targetDate = new Date(2025, 7, 1, 21, 0, 0); // August 10, 2025, 6:00 PM
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate.getTime() - now;
+
+            if (distance < 0) {
+                // Countdown finished
+                document.getElementById('countdown').classList.add('hidden');
+                document.getElementById('surpriseButton').classList.remove('hidden');
+                document.getElementById('surpriseButton').classList.add('show');
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        // Update countdown immediately and then every second
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
